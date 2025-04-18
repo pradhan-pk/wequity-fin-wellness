@@ -16,9 +16,14 @@ if st.button("Login"):
             "username": username,
             "password": password
         })
+        response_data = response.json()
         if response.status_code == 200:
             st.success("Login successful!")
             st.session_state["username"] = username
+            st.session_state["city"] = response_data["city"]
+            st.session_state["city_tier"] = response_data["city_tier"]
+            st.session_state["job_type"] = response_data["job_type"]
+            print(st.session_state)
             st.switch_page("pages/profile.py")
         else:
             st.error("Invalid credentials.")
