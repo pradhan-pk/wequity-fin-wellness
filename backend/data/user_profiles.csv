@@ -1,5 +1,5 @@
 username,password,job_type,city,tier
-avinya,pass1,ride_hailing,Indore,tier_3
+avinay,pass1,ride_hailing,Indore,tier_3
 user2,pass2,grocery_delivery,Delhi,tier_1
 user3,pass3,ride_hailing,Delhi,tier_1
 user4,pass4,gig_marketplace,Hyderabad,tier_2

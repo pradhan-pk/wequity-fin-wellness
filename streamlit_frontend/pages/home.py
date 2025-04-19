@@ -23,6 +23,7 @@ if st.button("Login"):
             st.session_state["city"] = response_data["city"]
             st.session_state["city_tier"] = response_data["city_tier"]
             st.session_state["job_type"] = response_data["job_type"]
+            st.session_state["past_income"] = response_data["past_income"]
             print(st.session_state)
             st.switch_page("pages/profile.py")
         else:

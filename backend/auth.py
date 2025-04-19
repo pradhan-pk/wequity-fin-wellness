@@ -18,6 +18,8 @@ class LoginRequest(BaseModel):
 USER_DATA = pd.read_csv(r"data\user_profiles.csv")
 user_profiles = USER_DATA
 
+income_df = pd.read_csv(r"data\income_history.csv")
+
 
 @router.post("/login")
 def login(req: LoginRequest):
@@ -28,13 +30,24 @@ def login(req: LoginRequest):
     if user.empty:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     else:
-         user_profile = user_profiles[user_profiles["username"] == req.username].iloc[0]
-         print(user_profile)
+        user_profile = user_profiles[user_profiles["username"] == req.username].iloc[0]
+        if user_profile.empty:
+            raise HTTPException(status_code=404, detail="No profile found for user")
+        print(user_profile)
+
+        user_income = income_df[income_df["username"] == req.username]
+        if user_income.empty:
+            raise HTTPException(status_code=404, detail="No income history found for user")
+        month_1 = int(user_income["month_1"].values[0])
+        month_2 = int(user_income["month_2"].values[0])
+        month_3 = int(user_income["month_3"].values[0])
+
 
     return {"message": "Login successful", 
             "username": req.username, 
             "city": user_profile["city"], 
             "city_tier": user_profile["tier"],
-            "job_type": user_profile["job_type"]}
+            "job_type": user_profile["job_type"],
+            "past_income": [month_1, month_2, month_3]}
 
 

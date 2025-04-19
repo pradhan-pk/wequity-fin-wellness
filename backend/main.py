@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
+from budgeting_advisor import router as advisor_router
 from pydantic import BaseModel
 import pandas as pd
 import joblib
@@ -17,6 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(advisor_router)
 
 
 # Load model and data
@@ -65,3 +67,5 @@ def predict_income(request: UserRequest):
         "predicted_income": round(prediction, 2),
         "volatility_estimate": round(volatility, 2)
     }
+
+
